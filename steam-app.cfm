@@ -9,11 +9,17 @@
     <cffile action="read" file="C:\ColdFusion2021\cfusion\wwwroot\src\data.json" variable="data">
 
     <cfset steamData = deserializeJSON(data)>
-    <cfset steamId = "#steamData.steamid#">
-    <cfset steamApiKey = "#steamData.apikey#">
+    <cfset steamId = steamData.steamid>
+    <cfset steamApiKey = steamData.apikey>
 
     <cfif isDefined("form.steamId")>
-      <cfset steamId = form.steamId>
+      <cfhttp result="steamVanityIdResponse" method="GET"  url="http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=#steamApiKey#&vanityurl=#form.steamId#"></cfhttp>
+      <cfset playerIdData = deserializeJSON("#steamVanityIdResponse.Filecontent#")>
+      <cfset playerIdDataSuccess = playerIdData.response.success>
+      <cfset playerIdDataSteamId = playerIdData.response.steamid>
+      
+      <cfset steamId = playerIdDataSteamId>
+     
     </cfif>
 
     <cfhttp result="ownedGames" method="GET" url="https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=#steamApiKey#&include_appinfo=true&include_played_free_games=true&steamid=#steamId#&format=json"></cfhttp>
