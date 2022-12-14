@@ -1,4 +1,4 @@
-Application that uses the Steam API. The user can enter a Steam ID, if the ID is valid the app will display the username and avatar, and list all games and playtime for that account.
+Application that uses the Steam API. The user can enter a Steam vanity ID, if the vanity ID is valid the app will display the username and avatar, and list all games and playtime for that account.
 
 ![](Screenshot_1.png)
 
