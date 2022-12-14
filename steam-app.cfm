@@ -15,10 +15,12 @@
     <cfif isDefined("form.steamId")>
       <cfhttp result="steamVanityIdResponse" method="GET"  url="http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=#steamApiKey#&vanityurl=#form.steamId#"></cfhttp>
       <cfset playerIdData = deserializeJSON("#steamVanityIdResponse.Filecontent#")>
-      <cfset playerIdDataSuccess = playerIdData.response.success>
-      <cfset playerIdDataSteamId = playerIdData.response.steamid>
-      
-      <cfset steamId = playerIdDataSteamId>
+
+      <cfif isDefined("playerIdData.response.steamid")>
+        <cfset steamId = playerIdData.response.steamid>
+      </cfif>
+    
+      <cfdump  var="#playerIdData#">
      
     </cfif>
 
